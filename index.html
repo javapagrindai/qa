@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QA Practice Tasks</title>
+  <style>
+    :root {
+      --techin-deep: #114954;
+      --techin-accent: #2BD47A;
+      --techin-mint: #E9F4E9;
+      --bg: #0b1214;
+      --card: #102126;
+      --text: #eaf2f4;
+      --muted: #a8c0c6;
+      --border: rgba(255,255,255,0.10);
+      --shadow: 0 18px 50px rgba(0,0,0,0.45);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 800px at 20% 0%, rgba(43,212,122,0.12), transparent 55%),
+        radial-gradient(900px 600px at 90% 10%, rgba(17,73,84,0.35), transparent 60%),
+        linear-gradient(180deg, var(--bg), #071013 75%);
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(16,33,38,0.92));
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    .task-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .task-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid var(--border);
+      background: rgba(16,33,38,0.70);
+      color: var(--text);
+      text-decoration: none;
+      padding: 14px 16px;
+      border-radius: 12px;
+      transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+    }
+
+    .task-link:hover {
+      transform: translateY(-1px);
+      border-color: rgba(43,212,122,0.45);
+      background: rgba(16,33,38,0.9);
+    }
+
+    .task-name {
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    .task-meta {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .pill {
+      border: 1px solid rgba(43,212,122,0.25);
+      background: rgba(43,212,122,0.08);
+      color: var(--techin-accent);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="card">
+      <h1>QA Practice Index</h1>
+      <p class="lead">Open the practice pages below. Each task page contains the Selenium steps for verification.</p>
+    </section>
+
+    <section class="card">
+      <div class="task-list">
+        <a class="task-link" href="basics/basics.html">
+          <div>
+            <div class="task-name">Task 1: Basics</div>
+            <div class="task-meta">Inputs, buttons, checkbox/radio, selects, and list interactions</div>
+          </div>
+          <span class="pill">Open</span>
+        </a>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
