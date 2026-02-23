@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Selenium basics practice</title>
+
+  <style>
+    :root {
+      /* TECHIN colors (from brandbook snippet) */
+      --techin-deep: #114954;
+      --techin-accent: #2BD47A;
+      --techin-mint: #E9F4E9;
+
+      /* Neutral UI colors (not claimed to be from TECHIN palette) */
+      --bg: #0b1214;
+      --card: #0f1b1f;
+      --card2: #102126;
+      --text: #eaf2f4;
+      --muted: #a8c0c6;
+      --border: rgba(255,255,255,0.10);
+      --shadow: 0 18px 50px rgba(0,0,0,0.45);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 800px at 20% 0%, rgba(43,212,122,0.12), transparent 55%),
+        radial-gradient(900px 600px at 90% 10%, rgba(17,73,84,0.35), transparent 60%),
+        linear-gradient(180deg, var(--bg), #071013 75%);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 16px 60px;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 18px 10px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(233,244,233,0.06), rgba(15,27,31,0.65));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: 0.2px;
+    }
+
+    .task-link {
+      margin-top: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--techin-accent);
+      text-decoration: none;
+      font-size: 13px;
+      border: 1px solid rgba(43,212,122,0.25);
+      background: rgba(43,212,122,0.08);
+      padding: 8px 10px;
+      border-radius: 10px;
+    }
+
+    .task-link:hover {
+      background: rgba(43,212,122,0.14);
+      border-color: rgba(43,212,122,0.4);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      background: rgba(233,244,233,0.06);
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--techin-accent);
+      box-shadow: 0 0 0 4px rgba(43,212,122,0.12);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    section.card {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(15,27,31,0.92));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+
+    .card h2 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      letter-spacing: 0.2px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      margin: 8px 0 0;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    @media (min-width: 650px) {
+      .row.two {
+        grid-template-columns: 1fr 1fr;
+      }
+      .row.three {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(16,33,38,0.85);
+      color: var(--text);
+      outline: none;
+      transition: border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+    }
+
+    input::placeholder, textarea::placeholder { color: rgba(168,192,198,0.65); }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: rgba(43,212,122,0.55);
+      box-shadow: 0 0 0 4px rgba(43,212,122,0.12);
+    }
+
+    textarea { resize: vertical; min-height: 92px; }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    button {
+      border: 1px solid var(--border);
+      background: rgba(233,244,233,0.06);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: transform 120ms ease, background 120ms ease, border-color 120ms ease, opacity 120ms ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.18);
+      background: rgba(233,244,233,0.09);
+    }
+
+    button:active { transform: translateY(0px); }
+
+    button.primary {
+      border-color: rgba(43,212,122,0.55);
+      background: linear-gradient(180deg, rgba(43,212,122,0.22), rgba(43,212,122,0.10));
+    }
+
+    button.danger {
+      border-color: rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      color: rgba(234,242,244,0.92);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      background: rgba(16,33,38,0.75);
+      padding: 8px 10px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 12px;
+      min-height: 34px;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+
+    .pill strong { color: var(--text); font-weight: 600; }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 900px) {
+      .split {
+        grid-template-columns: 1.2fr 0.8fr;
+      }
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    ul {
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .item {
+      border: 1px solid var(--border);
+      background: rgba(16,33,38,0.70);
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 120ms ease, border-color 120ms ease;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .item:hover {
+      transform: translateY(-1px);
+      border-color: rgba(43,212,122,0.45);
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: rgba(233,244,233,0.05);
+      white-space: nowrap;
+    }
+
+    .checkline {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      background: rgba(16,33,38,0.60);
+      border-radius: 12px;
+    }
+
+    .checkline input[type="checkbox"],
+    .checkline input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--techin-accent);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>selenium basics practice</h1>
+        <a class="task-link" id="task-page-link" href="seleniumbasics-task.html">Open task instructions page</a>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card" id="sec-basic">
+        <h2>Basic inputs and buttons</h2>
+
+        <div class="split">
+          <div>
+            <div class="row two">
+              <div class="field">
+                <label for="input-username">Username</label>
+                <input id="input-username" name="username" type="text" placeholder="Type username" data-testid="username" />
+              </div>
+              <div class="field">
+                <label for="input-password">Password</label>
+                <input id="input-password" name="password" type="password" placeholder="Type password" data-testid="password" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="textarea-notes">Notes</label>
+              <textarea id="textarea-notes" name="notes" placeholder="Type notes"></textarea>
+            </div>
+
+            <div class="actions">
+              <button id="btn-clear" class="danger" type="button">Clear inputs</button>
+              <button id="btn-submit" class="primary" type="button">Submit</button>
+              <button id="btn-toggle-submit" type="button">Toggle submit enabled</button>
+            </div>
+
+          </div>
+
+          <div>
+            <div class="pill" id="output-area" aria-live="polite">
+              <strong>Output</strong>
+              <span id="output-text">none</span>
+            </div>
+
+            <div style="margin-top: 10px;" class="pill">
+              <strong>Status</strong>
+              <span id="submit-status-text">Submit is enabled</span>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="row">
+              <div class="field">
+                <label for="input-readonly">Readonly field</label>
+                <input id="input-readonly" type="text" value="readonly value" readonly />
+              </div>
+              <div class="field">
+                <label for="input-disabled">Disabled field</label>
+                <input id="input-disabled" type="text" value="disabled value" disabled />
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="sec-checkbox-radio">
+        <h2>Checkbox and radio</h2>
+
+        <div class="row">
+          <div class="checkline">
+            <input id="chk-terms" type="checkbox" name="terms" />
+            <label for="chk-terms" style="margin:0;color:var(--text);font-size:13px;">Accept terms</label>
+            <span class="pill" id="chk-terms-state" style="margin-left:auto;">unchecked</span>
+          </div>
+
+          <div class="checkline" style="flex-direction:column;align-items:stretch;gap:10px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+              <div style="color:var(--text);font-size:13px;">Choose plan</div>
+              <span class="pill" id="radio-plan-state">none</span>
+            </div>
+
+            <div class="row three">
+              <div class="checkline">
+                <input id="radio-plan-basic" type="radio" name="plan" value="basic" />
+                <label for="radio-plan-basic" style="margin:0;color:var(--text);font-size:13px;">Basic</label>
+              </div>
+              <div class="checkline">
+                <input id="radio-plan-pro" type="radio" name="plan" value="pro" />
+                <label for="radio-plan-pro" style="margin:0;color:var(--text);font-size:13px;">Pro</label>
+              </div>
+              <div class="checkline">
+                <input id="radio-plan-enterprise" type="radio" name="plan" value="enterprise" />
+                <label for="radio-plan-enterprise" style="margin:0;color:var(--text);font-size:13px;">Enterprise</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="card" id="sec-dropdown">
+        <h2>Dropdowns Select</h2>
+
+        <div class="split">
+          <div>
+            <div class="field">
+              <label for="select-country">Country single select</label>
+              <select id="select-country" name="country">
+                <option value="">Select one</option>
+                <option value="lt">Lithuania</option>
+                <option value="pl">Poland</option>
+                <option value="uk">United Kingdom</option>
+                <option value="de">Germany</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="select-skills">Skills multi select</label>
+              <select id="select-skills" name="skills" multiple size="5">
+                <option value="selenium">Selenium</option>
+                <option value="junit">JUnit</option>
+                <option value="rest">API Testing</option>
+                <option value="sql">SQL</option>
+                <option value="docker">Docker</option>
+              </select>
+            </div>
+
+            <div class="actions">
+              <button id="btn-select-defaults" class="primary" type="button">Select defaults</button>
+              <button id="btn-clear-selects" class="danger" type="button">Clear selects</button>
+            </div>
+
+          </div>
+
+          <div>
+            <div class="pill" id="select-output" aria-live="polite">
+              <strong>Selected</strong>
+              <span id="select-output-text">none</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="sec-find-elements">
+        <h2>Lists for findElements</h2>
+
+        <div class="split">
+          <div>
+            <div class="row two">
+              <div class="field">
+                <label for="input-item">New item text</label>
+                <input id="input-item" type="text" placeholder="Type item text" />
+              </div>
+              <div class="actions" style="align-items:flex-end;">
+                <button id="btn-add-item" class="primary" type="button">Add item</button>
+                <button id="btn-add-5-items" type="button">Add 5 items</button>
+                <button id="btn-clear-items" class="danger" type="button">Clear list</button>
+              </div>
+            </div>
+
+            <ul id="items-list">
+              <li class="item" data-kind="static">
+                <span class="item-text">Static item 1</span>
+                <span class="tag">static</span>
+              </li>
+              <li class="item" data-kind="static">
+                <span class="item-text">Static item 2</span>
+                <span class="tag">static</span>
+              </li>
+              <li class="item" data-kind="static">
+                <span class="item-text">Static item 3</span>
+                <span class="tag">static</span>
+              </li>
+            </ul>
+
+          </div>
+
+          <div>
+            <div class="pill" id="items-output" aria-live="polite">
+              <strong>Last clicked</strong>
+              <span id="items-output-text">none</span>
+            </div>
+
+            <div style="margin-top: 10px;" class="pill">
+              <strong>Count</strong>
+              <span id="items-count-text">3</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    function byId(id) { return document.getElementById(id); }
+    function setText(id, text) { byId(id).textContent = text; }
+
+    function safeValue(v) {
+      const t = String(v || "").trim();
+      return t.length ? t : "(empty)";
+    }
+
+    const inputUsername = byId("input-username");
+    const inputPassword = byId("input-password");
+    const textareaNotes = byId("textarea-notes");
+
+    const btnClear = byId("btn-clear");
+    const btnSubmit = byId("btn-submit");
+    const btnToggleSubmit = byId("btn-toggle-submit");
+
+    btnClear.addEventListener("click", () => {
+      inputUsername.value = "";
+      inputPassword.value = "";
+      textareaNotes.value = "";
+      setText("output-text", "cleared");
+    });
+
+    btnSubmit.addEventListener("click", () => {
+      const u = safeValue(inputUsername.value);
+      const p = safeValue(inputPassword.value);
+      const n = safeValue(textareaNotes.value);
+      setText("output-text", "username=" + u + " | password=" + p + " | notes=" + n);
+    });
+
+    btnToggleSubmit.addEventListener("click", () => {
+      btnSubmit.disabled = !btnSubmit.disabled;
+      setText("submit-status-text", btnSubmit.disabled ? "Submit is disabled" : "Submit is enabled");
+    });
+
+    const chkTerms = byId("chk-terms");
+    chkTerms.addEventListener("change", () => {
+      setText("chk-terms-state", chkTerms.checked ? "checked" : "unchecked");
+    });
+
+    const radios = [
+      byId("radio-plan-basic"),
+      byId("radio-plan-pro"),
+      byId("radio-plan-enterprise")
+    ];
+
+    radios.forEach(r => r.addEventListener("change", () => {
+      const chosen = radios.find(x => x.checked);
+      setText("radio-plan-state", chosen ? chosen.value : "none");
+    }));
+
+    const selectCountry = byId("select-country");
+    const selectSkills = byId("select-skills");
+    const btnDefaults = byId("btn-select-defaults");
+    const btnClearSelects = byId("btn-clear-selects");
+
+    function updateSelectOutput() {
+      const country = selectCountry.value || "none";
+      const skills = Array.from(selectSkills.selectedOptions).map(o => o.value);
+      const skillsText = skills.length ? skills.join(",") : "none";
+      setText("select-output-text", "country=" + country + " | skills=" + skillsText);
+    }
+
+    selectCountry.addEventListener("change", updateSelectOutput);
+    selectSkills.addEventListener("change", updateSelectOutput);
+
+    btnDefaults.addEventListener("click", () => {
+      selectCountry.value = "lt";
+      Array.from(selectSkills.options).forEach(o => o.selected = false);
+      const defaults = ["selenium", "junit"];
+      Array.from(selectSkills.options).forEach(o => {
+        if (defaults.includes(o.value)) o.selected = true;
+      });
+      updateSelectOutput();
+    });
+
+    btnClearSelects.addEventListener("click", () => {
+      selectCountry.value = "";
+      Array.from(selectSkills.options).forEach(o => o.selected = false);
+      updateSelectOutput();
+    });
+
+    updateSelectOutput();
+
+    const inputItem = byId("input-item");
+    const btnAddItem = byId("btn-add-item");
+    const btnAdd5 = byId("btn-add-5-items");
+    const btnClearItems = byId("btn-clear-items");
+    const itemsList = byId("items-list");
+
+    function updateItemsCount() {
+      setText("items-count-text", String(itemsList.querySelectorAll(".item").length));
+    }
+
+    function wireItem(li) {
+      li.addEventListener("click", () => {
+        const text = li.querySelector(".item-text") ? li.querySelector(".item-text").textContent.trim() : li.textContent.trim();
+        setText("items-output-text", text);
+      });
+    }
+
+    function addItem(text, kind) {
+      const li = document.createElement("li");
+      li.className = "item";
+      li.dataset.kind = kind;
+
+      const spanText = document.createElement("span");
+      spanText.className = "item-text";
+      spanText.textContent = text;
+
+      const spanTag = document.createElement("span");
+      spanTag.className = "tag";
+      spanTag.textContent = kind;
+
+      li.appendChild(spanText);
+      li.appendChild(spanTag);
+
+      wireItem(li);
+      itemsList.appendChild(li);
+      updateItemsCount();
+    }
+
+    Array.from(itemsList.querySelectorAll(".item")).forEach(wireItem);
+    updateItemsCount();
+
+    btnAddItem.addEventListener("click", () => {
+      const t = inputItem.value.trim() || ("Item " + (itemsList.querySelectorAll(".item").length + 1));
+      addItem(t, "dynamic");
+      inputItem.value = "";
+    });
+
+    btnAdd5.addEventListener("click", () => {
+      const base = itemsList.querySelectorAll(".item").length;
+      for (let i = 1; i <= 5; i++) {
+        addItem("Generated item " + (base + i), "generated");
+      }
+    });
+
+    btnClearItems.addEventListener("click", () => {
+      itemsList.innerHTML = "";
+      setText("items-output-text", "none");
+      updateItemsCount();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>selenium basics practice tasks</title>
+  <style>
+    :root {
+      --techin-deep: #114954;
+      --techin-accent: #2BD47A;
+      --techin-mint: #E9F4E9;
+      --bg: #0b1214;
+      --card: #102126;
+      --text: #eaf2f4;
+      --muted: #a8c0c6;
+      --border: rgba(255,255,255,0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 800px at 20% 0%, rgba(43,212,122,0.12), transparent 55%),
+        radial-gradient(900px 600px at 90% 10%, rgba(17,73,84,0.35), transparent 60%),
+        linear-gradient(180deg, var(--bg), #071013 75%);
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(16,33,38,0.92));
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    a {
+      color: var(--techin-accent);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      color: var(--techin-mint);
+    }
+
+    ol {
+      margin: 0;
+      padding-left: 18px;
+      line-height: 1.5;
+    }
+
+    li + li { margin-top: 6px; }
+
+    code {
+      background: rgba(233,244,233,0.08);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1px 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>selenium basics practice tasks</h1>
+      <p class="lead">
+        Complete the steps on the main practice page using Selenium and verify visible text after each action.
+        <a href="seleniumbasics.html">Back to practice page</a>.
+      </p>
+    </div>
+
+    <section class="card">
+      <h2>Step 1: Basic inputs and buttons</h2>
+      <ol>
+        <li>Open <code>seleniumbasics.html</code> and locate the Username field, Password field, and Notes textarea.</li>
+        <li>Type test values, for example: username <code>student1</code>, password <code>pass123</code>, notes <code>first try</code>.</li>
+        <li>Click <code>Submit</code> and verify the Output text becomes exactly <code>username=student1 | password=pass123 | notes=first try</code>.</li>
+        <li>Click <code>Clear inputs</code> and verify all 3 fields are empty and the Output text becomes <code>cleared</code>.</li>
+        <li>Click <code>Toggle submit enabled</code> once and verify the <code>Submit</code> button is disabled and the Status text shows <code>Submit is disabled</code>.</li>
+        <li>Click <code>Toggle submit enabled</code> again and verify the <code>Submit</code> button is enabled and the Status text shows <code>Submit is enabled</code>.</li>
+        <li>Verify the Readonly field has readonly attribute and value <code>readonly value</code>.</li>
+        <li>Verify the Disabled field is disabled and value is <code>disabled value</code>.</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>Step 2: Checkbox and radio</h2>
+      <ol>
+        <li>Locate the Accept terms checkbox and its state text. Verify the initial state text is <code>unchecked</code>.</li>
+        <li>Click the Accept terms checkbox, verify it is selected, and verify the state text becomes <code>checked</code>.</li>
+        <li>Click the Accept terms checkbox again, verify it is not selected, and verify the state text becomes <code>unchecked</code>.</li>
+        <li>Find all plan radio buttons (Basic, Pro, Enterprise) and verify there are 3 options.</li>
+        <li>Click <code>Basic</code> and verify the selected plan text becomes <code>basic</code>.</li>
+        <li>Click <code>Pro</code> and verify the selected plan text becomes <code>pro</code>.</li>
+        <li>Click <code>Enterprise</code> and verify the selected plan text becomes <code>enterprise</code>.</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>Step 3: Dropdowns Select</h2>
+      <ol>
+        <li>Locate the Country single select, the Skills multi-select, and the Selected output text. Verify initial output is <code>country=none | skills=none</code>.</li>
+        <li>Select country value <code>de</code> (Germany) and verify output becomes <code>country=de | skills=none</code>.</li>
+        <li>In the Skills multi-select, select <code>selenium</code> and <code>sql</code>. Verify output becomes <code>country=de | skills=selenium,sql</code>.</li>
+        <li>Click <code>Select defaults</code> and verify output becomes <code>country=lt | skills=selenium,junit</code>.</li>
+        <li>Click <code>Clear selects</code> and verify output returns to <code>country=none | skills=none</code>.</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>Step 4: Lists for findElements</h2>
+      <ol>
+        <li>Locate the list area, the Count text, and the Last clicked text. Verify initial Count is <code>3</code> and Last clicked is <code>none</code>.</li>
+        <li>Use <code>findElements</code> to collect all visible list items and verify the collection size is 3.</li>
+        <li>Click the first existing item and verify the Last clicked text becomes <code>Static item 1</code>.</li>
+        <li>Type <code>My item</code> into the New item text field, click <code>Add item</code>, and verify the Count text becomes <code>4</code>.</li>
+        <li>Find all items again and verify one item text is <code>My item</code>.</li>
+        <li>Click <code>Add 5 items</code> and verify the Count text becomes <code>9</code>.</li>
+        <li>Click any generated item and verify the Last clicked text changes to that item text.</li>
+        <li>Click <code>Clear list</code> and verify the list is empty, Count is <code>0</code>, and Last clicked is <code>none</code>.</li>
+      </ol>
+    </section>
+  </div>
+</body>
+</html>
