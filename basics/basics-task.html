@@ -81,69 +81,226 @@
       border-radius: 6px;
       padding: 1px 5px;
     }
+
+    .toolbar {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar-label {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .lang-btn {
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .lang-btn:hover {
+      color: var(--text);
+      border-color: rgba(255,255,255,0.08);
+    }
+
+    .lang-btn.active {
+      color: var(--text);
+      border-color: rgba(43,212,122,0.35);
+      background: rgba(43,212,122,0.10);
+    }
+
+    [data-lang-block] { display: none; }
+    [data-lang-block].active { display: block; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card">
       <h1>selenium basics practice tasks</h1>
-      <p class="lead">
+
+      <div class="lead" data-lang-block="en">
         Complete the steps on the main practice page using Selenium and verify visible text after each action.
         <a href="basics.html">Back to practice page</a>.
-      </p>
+      </div>
+      <div class="lead" data-lang-block="lt">
+        Atlikite veiksmus pagrindiniame praktikos puslapyje naudodami Selenium ir po kiekvieno veiksmo patikrinkite matomą tekstą.
+        <a href="basics.html">Grįžti į praktikos puslapį</a>.
+      </div>
+
+      <div class="toolbar">
+        <span class="toolbar-label">Language / Kalba</span>
+        <div class="lang-toggle" role="tablist" aria-label="Language selector">
+          <button class="lang-btn" id="lang-en" type="button" data-lang="en" role="tab" aria-selected="true">English</button>
+          <button class="lang-btn" id="lang-lt" type="button" data-lang="lt" role="tab" aria-selected="false">Lietuvių</button>
+        </div>
+      </div>
     </div>
 
-    <section class="card">
-      <h2>Step 1: Basic inputs and buttons</h2>
-      <ol>
-        <li>Open <code>basics.html</code> and locate the Username field, Password field, and Notes textarea.</li>
-        <li>Type test values, for example: username <code>student1</code>, password <code>pass123</code>, notes <code>first try</code>.</li>
-        <li>Click <code>Submit</code> and verify the Output text becomes exactly <code>username=student1 | password=pass123 | notes=first try</code>.</li>
-        <li>Click <code>Clear inputs</code> and verify all 3 fields are empty and the Output text becomes <code>cleared</code>.</li>
-        <li>Click <code>Toggle submit enabled</code> once and verify the <code>Submit</code> button is disabled and the Status text shows <code>Submit is disabled</code>.</li>
-        <li>Click <code>Toggle submit enabled</code> again and verify the <code>Submit</code> button is enabled and the Status text shows <code>Submit is enabled</code>.</li>
-        <li>Verify the Readonly field has readonly attribute and value <code>readonly value</code>.</li>
-        <li>Verify the Disabled field is disabled and value is <code>disabled value</code>.</li>
-      </ol>
-    </section>
+    <div data-lang-block="en">
+      <section class="card">
+        <h2>Step 1: Basic inputs and buttons</h2>
+        <ol>
+          <li>Open <code>basics.html</code> and locate the Username field, Password field, and Notes textarea.</li>
+          <li>Type test values, for example: username <code>student1</code>, password <code>pass123</code>, notes <code>first try</code>.</li>
+          <li>Click <code>Submit</code> and verify the Output text becomes exactly <code>username=student1 | password=pass123 | notes=first try</code>.</li>
+          <li>Click <code>Clear inputs</code> and verify all 3 fields are empty and the Output text becomes <code>cleared</code>.</li>
+          <li>Click <code>Toggle submit enabled</code> once and verify the <code>Submit</code> button is disabled and the Status text shows <code>Submit is disabled</code>.</li>
+          <li>Click <code>Toggle submit enabled</code> again and verify the <code>Submit</code> button is enabled and the Status text shows <code>Submit is enabled</code>.</li>
+          <li>Verify the Readonly field has readonly attribute and value <code>readonly value</code>.</li>
+          <li>Verify the Disabled field is disabled and value is <code>disabled value</code>.</li>
+        </ol>
+      </section>
 
-    <section class="card">
-      <h2>Step 2: Checkbox and radio</h2>
-      <ol>
-        <li>Locate the Accept terms checkbox and its state text. Verify the initial state text is <code>unchecked</code>.</li>
-        <li>Click the Accept terms checkbox, verify it is selected, and verify the state text becomes <code>checked</code>.</li>
-        <li>Click the Accept terms checkbox again, verify it is not selected, and verify the state text becomes <code>unchecked</code>.</li>
-        <li>Find all plan radio buttons (Basic, Pro, Enterprise) and verify there are 3 options.</li>
-        <li>Click <code>Basic</code> and verify the selected plan text becomes <code>basic</code>.</li>
-        <li>Click <code>Pro</code> and verify the selected plan text becomes <code>pro</code>.</li>
-        <li>Click <code>Enterprise</code> and verify the selected plan text becomes <code>enterprise</code>.</li>
-      </ol>
-    </section>
+      <section class="card">
+        <h2>Step 2: Checkbox and radio</h2>
+        <ol>
+          <li>Locate the Accept terms checkbox and its state text. Verify the initial state text is <code>unchecked</code>.</li>
+          <li>Click the Accept terms checkbox, verify it is selected, and verify the state text becomes <code>checked</code>.</li>
+          <li>Click the Accept terms checkbox again, verify it is not selected, and verify the state text becomes <code>unchecked</code>.</li>
+          <li>Find all plan radio buttons (Basic, Pro, Enterprise) and verify there are 3 options.</li>
+          <li>Click <code>Basic</code> and verify the selected plan text becomes <code>basic</code>.</li>
+          <li>Click <code>Pro</code> and verify the selected plan text becomes <code>pro</code>.</li>
+          <li>Click <code>Enterprise</code> and verify the selected plan text becomes <code>enterprise</code>.</li>
+        </ol>
+      </section>
 
-    <section class="card">
-      <h2>Step 3: Dropdowns Select</h2>
-      <ol>
-        <li>Locate the Country single select, the Skills multi-select, and the Selected output text. Verify initial output is <code>country=none | skills=none</code>.</li>
-        <li>Select country value <code>de</code> (Germany) and verify output becomes <code>country=de | skills=none</code>.</li>
-        <li>In the Skills multi-select, select <code>selenium</code> and <code>sql</code>. Verify output becomes <code>country=de | skills=selenium,sql</code>.</li>
-        <li>Click <code>Select defaults</code> and verify output becomes <code>country=lt | skills=selenium,junit</code>.</li>
-        <li>Click <code>Clear selects</code> and verify output returns to <code>country=none | skills=none</code>.</li>
-      </ol>
-    </section>
+      <section class="card">
+        <h2>Step 3: Dropdowns Select</h2>
+        <ol>
+          <li>Locate the Country single select, the Skills multi-select, and the Selected output text. Verify initial output is <code>country=none | skills=none</code>.</li>
+          <li>Select country value <code>de</code> (Germany) and verify output becomes <code>country=de | skills=none</code>.</li>
+          <li>In the Skills multi-select, select <code>selenium</code> and <code>sql</code>. Verify output becomes <code>country=de | skills=selenium,sql</code>.</li>
+          <li>Click <code>Select defaults</code> and verify output becomes <code>country=lt | skills=selenium,junit</code>.</li>
+          <li>Click <code>Clear selects</code> and verify output returns to <code>country=none | skills=none</code>.</li>
+        </ol>
+      </section>
 
-    <section class="card">
-      <h2>Step 4: Lists for findElements</h2>
-      <ol>
-        <li>Locate the list area, the Count text, and the Last clicked text. Verify initial Count is <code>3</code> and Last clicked is <code>none</code>.</li>
-        <li>Use <code>findElements</code> to collect all visible list items and verify the collection size is 3.</li>
-        <li>Click the first existing item and verify the Last clicked text becomes <code>Static item 1</code>.</li>
-        <li>Type <code>My item</code> into the New item text field, click <code>Add item</code>, and verify the Count text becomes <code>4</code>.</li>
-        <li>Find all items again and verify one item text is <code>My item</code>.</li>
-        <li>Click <code>Add 5 items</code> and verify the Count text becomes <code>9</code>.</li>
-        <li>Click any generated item and verify the Last clicked text changes to that item text.</li>
-        <li>Click <code>Clear list</code> and verify the list is empty, Count is <code>0</code>, and Last clicked is <code>none</code>.</li>
-      </ol>
-    </section>
+      <section class="card">
+        <h2>Step 4: Lists for findElements</h2>
+        <ol>
+          <li>Locate the list area, the Count text, and the Last clicked text. Verify initial Count is <code>3</code> and Last clicked is <code>none</code>.</li>
+          <li>Use <code>findElements</code> to collect all visible list items and verify the collection size is 3.</li>
+          <li>Click the first existing item and verify the Last clicked text becomes <code>Static item 1</code>.</li>
+          <li>Type <code>My item</code> into the New item text field, click <code>Add item</code>, and verify the Count text becomes <code>4</code>.</li>
+          <li>Find all items again and verify one item text is <code>My item</code>.</li>
+          <li>Click <code>Add 5 items</code> and verify the Count text becomes <code>9</code>.</li>
+          <li>Click any generated item and verify the Last clicked text changes to that item text.</li>
+          <li>Click <code>Clear list</code> and verify the list is empty, Count is <code>0</code>, and Last clicked is <code>none</code>.</li>
+        </ol>
+      </section>
+    </div>
+
+    <div data-lang-block="lt">
+      <section class="card">
+        <h2>1 žingsnis: Pagrindiniai įvesties laukai ir mygtukai</h2>
+        <ol>
+          <li>Atidarykite <code>basics.html</code> ir raskite Username lauką, Password lauką ir Notes teksto sritį.</li>
+          <li>Įveskite testines reikšmes, pvz.: username <code>student1</code>, password <code>pass123</code>, notes <code>first try</code>.</li>
+          <li>Paspauskite <code>Submit</code> ir patikrinkite, kad Output tekstas tampa tiksliai <code>username=student1 | password=pass123 | notes=first try</code>.</li>
+          <li>Paspauskite <code>Clear inputs</code> ir patikrinkite, kad visi 3 laukai yra tušti, o Output tekstas tampa <code>cleared</code>.</li>
+          <li>Paspauskite <code>Toggle submit enabled</code> vieną kartą ir patikrinkite, kad <code>Submit</code> mygtukas yra išjungtas, o Status tekstas rodo <code>Submit is disabled</code>.</li>
+          <li>Dar kartą paspauskite <code>Toggle submit enabled</code> ir patikrinkite, kad <code>Submit</code> mygtukas yra įjungtas, o Status tekstas rodo <code>Submit is enabled</code>.</li>
+          <li>Patikrinkite, kad Readonly laukas turi <code>readonly</code> atributą ir reikšmę <code>readonly value</code>.</li>
+          <li>Patikrinkite, kad Disabled laukas yra išjungtas ir jo reikšmė yra <code>disabled value</code>.</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2>2 žingsnis: Žymimasis langelis ir radijo mygtukai</h2>
+        <ol>
+          <li>Raskite Accept terms žymimąjį langelį ir jo būsenos tekstą. Patikrinkite, kad pradinė būsena yra <code>unchecked</code>.</li>
+          <li>Paspauskite Accept terms žymimąjį langelį, patikrinkite, kad jis pažymėtas, ir kad būsenos tekstas tampa <code>checked</code>.</li>
+          <li>Dar kartą paspauskite Accept terms žymimąjį langelį, patikrinkite, kad jis nebepažymėtas, ir kad būsenos tekstas tampa <code>unchecked</code>.</li>
+          <li>Raskite visus plano radijo mygtukus (Basic, Pro, Enterprise) ir patikrinkite, kad yra 3 pasirinkimai.</li>
+          <li>Paspauskite <code>Basic</code> ir patikrinkite, kad pasirinkto plano tekstas tampa <code>basic</code>.</li>
+          <li>Paspauskite <code>Pro</code> ir patikrinkite, kad pasirinkto plano tekstas tampa <code>pro</code>.</li>
+          <li>Paspauskite <code>Enterprise</code> ir patikrinkite, kad pasirinkto plano tekstas tampa <code>enterprise</code>.</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2>3 žingsnis: Išskleidžiami pasirinkimai (Select)</h2>
+        <ol>
+          <li>Raskite Country vieno pasirinkimo lauką, Skills kelių pasirinkimų lauką ir Selected išvesties tekstą. Patikrinkite, kad pradinė išvestis yra <code>country=none | skills=none</code>.</li>
+          <li>Pasirinkite šalies reikšmę <code>de</code> (Germany) ir patikrinkite, kad išvestis tampa <code>country=de | skills=none</code>.</li>
+          <li>Skills kelių pasirinkimų lauke pasirinkite <code>selenium</code> ir <code>sql</code>. Patikrinkite, kad išvestis tampa <code>country=de | skills=selenium,sql</code>.</li>
+          <li>Paspauskite <code>Select defaults</code> ir patikrinkite, kad išvestis tampa <code>country=lt | skills=selenium,junit</code>.</li>
+          <li>Paspauskite <code>Clear selects</code> ir patikrinkite, kad išvestis vėl tampa <code>country=none | skills=none</code>.</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2>4 žingsnis: Sąrašai su findElements</h2>
+        <ol>
+          <li>Raskite sąrašo sritį, Count tekstą ir Last clicked tekstą. Patikrinkite, kad pradinis Count yra <code>3</code>, o Last clicked yra <code>none</code>.</li>
+          <li>Naudokite <code>findElements</code>, kad surinktumėte visus matomus sąrašo elementus, ir patikrinkite, kad kolekcijos dydis yra 3.</li>
+          <li>Paspauskite pirmą esamą elementą ir patikrinkite, kad Last clicked tekstas tampa <code>Static item 1</code>.</li>
+          <li>Įveskite <code>My item</code> į New item text lauką, paspauskite <code>Add item</code> ir patikrinkite, kad Count tekstas tampa <code>4</code>.</li>
+          <li>Dar kartą raskite visus elementus ir patikrinkite, kad vieno elemento tekstas yra <code>My item</code>.</li>
+          <li>Paspauskite <code>Add 5 items</code> ir patikrinkite, kad Count tekstas tampa <code>9</code>.</li>
+          <li>Paspauskite bet kurį sugeneruotą elementą ir patikrinkite, kad Last clicked tekstas pasikeičia į to elemento tekstą.</li>
+          <li>Paspauskite <code>Clear list</code> ir patikrinkite, kad sąrašas tuščias, Count yra <code>0</code>, o Last clicked yra <code>none</code>.</li>
+        </ol>
+      </section>
+    </div>
   </div>
+
+  <script>
+    (function () {
+      const buttons = Array.from(document.querySelectorAll(".lang-btn"));
+      const blocks = Array.from(document.querySelectorAll("[data-lang-block]"));
+      const storageKey = "basics-task-lang";
+
+      function setLanguage(lang) {
+        blocks.forEach(block => {
+          block.classList.toggle("active", block.getAttribute("data-lang-block") === lang);
+        });
+
+        buttons.forEach(btn => {
+          const isActive = btn.getAttribute("data-lang") === lang;
+          btn.classList.toggle("active", isActive);
+          btn.setAttribute("aria-selected", isActive ? "true" : "false");
+        });
+
+        document.documentElement.lang = lang === "lt" ? "lt" : "en";
+
+        try {
+          localStorage.setItem(storageKey, lang);
+        } catch (e) {
+          /* ignore storage issues */
+        }
+      }
+
+      buttons.forEach(btn => {
+        btn.addEventListener("click", () => setLanguage(btn.getAttribute("data-lang")));
+      });
+
+      let initial = "en";
+      try {
+        const saved = localStorage.getItem(storageKey);
+        if (saved === "lt" || saved === "en") initial = saved;
+      } catch (e) {
+        /* ignore storage issues */
+      }
+
+      setLanguage(initial);
+    })();
+  </script>
 </body>
 </html>
